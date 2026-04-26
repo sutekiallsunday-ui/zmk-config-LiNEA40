@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,
+            //スクロール方向を逆転,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -115,6 +115,29 @@
             bindings = <&msc>, <&msc>;
 
             tap-ms = <20>;
+        };
+    };
+
+    macros {
+        new_macro01: new_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(I) &kp LS(Q) &kp LS(V) &kp LS(I) &kp LS(A)>;
+            label = "NEW_MACRO";
+        };
+
+        new_macro02: new_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(C) &kp LS(S) &kp LS(M) &kp LS(S)>;
+            label = "NEW_MACRO";
+        };
+
+        new_macro03: new_macro03 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(M) &kp E &kp D &kp LS(T) &kp E &kp C &kp H &kp KP_NUMBER_2>;
+            label = "NEW_MACRO03";
         };
     };
 
