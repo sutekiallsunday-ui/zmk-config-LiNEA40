@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,
+            //スクロール方向を逆転,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -138,6 +138,27 @@
             #binding-cells = <0>;
             bindings = <&kp LS(M) &kp E &kp D &kp LS(T) &kp E &kp C &kp H &kp KP_NUMBER_2>;
             label = "NEW_MACRO03";
+        };
+
+        new_macro04: new_macro04 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(P) &kp LS(P) &kp LS(G)>;
+            label = "NEW_MACRO04";
+        };
+
+        new_macro05: new_macro05 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(S) &kp LS(H) &kp LS(D) &kp SPACE &kp LS(E) &kp C &kp H &kp O &kp SPACE &kp LS(L) &kp A &kp B &kp DOT>;
+            label = "NEW_MACRO05";
+        };
+
+        new_macro06: new_macro06 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp KP_NUMBER_1 &kp O &kp N &kp KP_NUMBER_1>;
+            label = "NEW_MACRO06";
         };
     };
 
