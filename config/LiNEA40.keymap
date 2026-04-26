@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,,,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -118,6 +118,50 @@
         };
     };
 
+    macros {
+        macro01: macro01 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(I) &kp LS(Q) &kp LS(V) &kp LS(I) &kp LS(A)>;
+            label = "MACRO01";
+        };
+
+        macro02: macro02 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(C) &kp LS(S) &kp LS(M) &kp LS(S)>;
+            label = "MACRO02";
+        };
+
+        macro03: macro03 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(M) &kp E &kp D &kp LS(T) &kp E &kp C &kp H &kp KP_NUMBER_2>;
+            label = "MACRO03";
+        };
+
+        macro04: macro04 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(A) &kp LS(S) &kp SPACE &kp LS(C) &kp O &kp N &kp N &kp E &kp C &kp T>;
+            label = "MACRO04";
+        };
+
+        macro05: macro05 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(S) &kp LS(H) &kp LS(D) &kp SPACE &kp LS(E) &kp C &kp H &kp O &kp SPACE &kp LS(L) &kp A &kp B &kp DOT>;
+            label = "MACRO05";
+        };
+
+        macro06: macro06 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp KP_NUMBER_1 &kp O &kp N &kp KP_NUMBER_1>;
+            label = "MACRO06";
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -160,10 +204,10 @@
 
         CURSOR {
             bindings = <
-&trans  &trans         &trans            &trans                &trans                                      &trans            &kp LG(LC(LEFT_ARROW))  &kp UP_ARROW    &kp LG(RIGHT_ARROW)  &trans
-&trans  &trans         &trans            &trans                &trans                                      &kp HOME          &kp LEFT_ARROW          &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp END
-&trans  &kp LESS_THAN  &kp GREATER_THAN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                       &kp LEFT_BRACKET  &kp RIGHT_BRACKET       &trans          &trans               &trans
-&trans  &trans         &trans            &trans                &trans                 &trans    &kp ENTER  &trans                                    &trans          &trans               &trans
+&macro04  &macro05       &macro06          &trans                &trans                                      &trans            &kp LG(LC(LEFT_ARROW))  &kp UP_ARROW    &kp LG(RIGHT_ARROW)  &trans
+&macro01  &macro02       &macro03          &trans                &trans                                      &kp HOME          &kp LEFT_ARROW          &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp END
+&trans    &kp LESS_THAN  &kp GREATER_THAN  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS                       &kp LEFT_BRACKET  &kp RIGHT_BRACKET       &trans          &trans               &trans
+&trans    &trans         &trans            &trans                &trans                 &trans    &kp ENTER  &trans                                    &trans          &trans               &trans
             >;
         };
 
