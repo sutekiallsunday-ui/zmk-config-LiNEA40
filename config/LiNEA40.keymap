@@ -66,7 +66,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -175,9 +175,9 @@
 
         MARK {
             bindings = <
-&trans     &kp LG(LS(S))  &kp LS(LC(R))  &kp LC(R)      &trans                       &kp MINUS  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp PLUS
+&trans     &kp LG(LS(S))  &kp LS(LC(R))  &kp LC(R)      &trans                       &kp MINUS  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp LS(SEMI)
 &kp LC(A)  &kp LS(S)      &kp LC(D)      &kp LC(LS(G))  &kp LC(G)                    &kp DOT    &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp KP_NUMBER_0
-&kp LC(Z)  &kp LC(X)      &kp LC(C)      &kp LC(V)      &kp LC(B)                    &kp SLASH  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp ASTERISK
+&kp LC(Z)  &kp LC(X)      &kp LC(C)      &kp LC(V)      &kp LC(B)                    &kp SLASH  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp LS(SQT)
 &trans     &trans         &trans         &trans         &trans     &trans    &trans  &kp EQUAL                   &kp DOLLAR       &kp AT           &kp LS(QUESTION)
             >;
 
