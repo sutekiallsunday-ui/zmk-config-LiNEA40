@@ -33,6 +33,15 @@
     acceleration-exponent = <0>;
 };
 
+//mod-tap (home row mods) ローマ字入力高速時の誤爆対策
+
+&mt {
+    flavor = "tap-preferred";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <175>;
+    require-prior-idle-ms = <150>;
+};
+
 / {
     input_processors {
         zip_wheel_scaler: zip_wheel_scaler {
