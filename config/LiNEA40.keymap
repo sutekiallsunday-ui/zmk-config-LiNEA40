@@ -42,13 +42,13 @@
     require-prior-idle-ms = <150>;
 };
 
-//layer-tap (親指キー Space/Tab/Enter/BS/[) 同じ趣旨の誤爆対策
+//layer-tap (親指キー Space/Tab/Enter/BS/[) 同じ趣旨の誤爆対策（強化版）
 
 &lt {
     flavor = "tap-preferred";
     tapping-term-ms = <200>;
     quick-tap-ms = <175>;
-    require-prior-idle-ms = <150>;
+    require-prior-idle-ms = <200>;
 };
 
 / {
