@@ -93,6 +93,13 @@
             bindings = <&kp DEL>;
             key-positions = <16 17>;
         };
+
+        scroll_combo {
+            timeout-ms = <100>;
+            key-positions = <18 19>;
+            bindings = <&mo 5>;
+            slow-release;
+        };
     };
 
     behaviors {
