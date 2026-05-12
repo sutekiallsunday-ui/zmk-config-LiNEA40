@@ -77,7 +77,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,
+            //スクロール方向を逆転,,
             <&zip_xy_to_scroll_mapper>;
     };
 
@@ -235,7 +235,7 @@
             bindings = <
 &macro04  &macro05       &macro06          &trans      &trans                                      &kp LG(LC(LEFT_ARROW))  &kp LG(LEFT_ARROW)  &kp UP_ARROW    &kp LG(RIGHT_ARROW)  &kp LG(LC(RIGHT))
 &macro01  &macro02       &macro03          &trans      &trans                                      &kp HOME                &kp LEFT_ARROW      &kp DOWN_ARROW  &kp RIGHT_ARROW      &kp END
-&trans    &kp LESS_THAN  &kp GREATER_THAN  &kp LS(N8)  &kp LS(N9)                                  &trans                  &kp C_VOLUME_DOWN   &kp C_MUTE      &kp C_VOLUME_UP      &trans
+&trans    &kp LESS_THAN  &kp GREATER_THAN  &kp LS(N8)  &kp LS(N9)                                  &kp LC(C_AC_BACK)       &kp C_VOLUME_DOWN   &kp C_MUTE      &kp C_VOLUME_UP      &kp LC(C_AC_FORWARD)
 &trans    &trans         &trans            &trans      &kp LG(LC(F4))  &kp LG(LC(D))    &kp ENTER  &trans                                      &trans          &trans               &trans
             >;
 
