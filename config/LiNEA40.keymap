@@ -108,11 +108,20 @@
             key-positions = <36 35>;
         };
 
+        // DeleteKey (DEL = 前方向削除)
+        //   旧設定: J(16) + K(17) → ローマ字入力で J を含む単語のたびに
+        //   ZMK が K の到来を timeout-ms だけ待つため J の出力にラグが乗り、
+        //   さらに J 直後に K が混ざると DEL に化けて「J が反応しない」現象に。
+        //   解消のため、ローマ字／英字でほぼ同時押しが起きない
+        //   COMMA(27) + DOT(28) ペアへ移動する。
+        //   ※他候補: M(26)+COMMA(27) や K(17)+L(18) なども安全。
+        //     キーペアだけ差し替えれば変更可能。
+
         DeleteKey {
-            timeout-ms = <30>;           // タイポでの J+K 同時押し誤発火を防止
+            timeout-ms = <30>;
             require-prior-idle-ms = <150>;
             bindings = <&kp DEL>;
-            key-positions = <16 17>;
+            key-positions = <27 28>;
         };
 
         scroll_combo {
