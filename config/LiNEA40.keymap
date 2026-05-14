@@ -102,8 +102,13 @@
     combos {
         compatible = "zmk,combos";
 
+        // ZenkakuHankaku (TAB + ENTER 親指同時押し → 半角/全角)
+        //   親指の同時押しはタイミングが揃いにくいので 75ms に広げる。
+        //   IME 変換中の TAB→ENTER 連続入力にも影響しないよう
+        //   require-prior-idle-ms は付けない。
+
         ZenkakuHankaku {
-            timeout-ms = <40>;
+            timeout-ms = <75>;
             bindings = <&kp GRAVE>;
             key-positions = <36 35>;
         };
@@ -113,20 +118,20 @@
         //   ZMK が K の到来を timeout-ms だけ待つため J の出力にラグが乗り、
         //   さらに J 直後に K が混ざると DEL に化けて「J が反応しない」現象に。
         //   解消のため、ローマ字／英字でほぼ同時押しが起きない
-        //   COMMA(27) + DOT(28) ペアへ移動する。
+        //   COMMA(27) + DOT(28) ペアへ移動。
+        //   このペアは通常タイピングでまず同時押しが起きないため
+        //   timeout-ms を 100ms に広げて発火しやすくしている。
         //   ※他候補: M(26)+COMMA(27) や K(17)+L(18) なども安全。
         //     キーペアだけ差し替えれば変更可能。
 
         DeleteKey {
-            timeout-ms = <30>;
-            require-prior-idle-ms = <150>;
+            timeout-ms = <100>;
             bindings = <&kp DEL>;
             key-positions = <27 28>;
         };
 
         scroll_combo {
             timeout-ms = <100>;
-            require-prior-idle-ms = <150>;
             key-positions = <18 19>;
             bindings = <&mo SCROLL>;
             slow-release;
