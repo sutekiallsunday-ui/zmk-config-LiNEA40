@@ -49,16 +49,19 @@
     require-prior-idle-ms = <200>;   // 150 → 200 に強化（誤 hold 抑制）
 };
 
-//layer-tap (親指キー Space/Tab/Enter/BS/[) 強化版
-//   入力中の「ふと止まる」瞬間にレイヤーが起動して飛ぶ事故を防止
-//   IME 変換確定後の直打ち（Enter→次文字 など）でも CURSOR/FUNCTION が
-//   起動しないよう、tapping-term と require-prior-idle をかなり長めに取る。
+//layer-tap (親指キー Space/Tab/Enter/BS/[) ───────────────────
+//  【方針変更】以前は誤発火防止のため tap-preferred + 長め tapping-term
+//  にしていたが、その結果「親指でレイヤーに入れない（タップが送られる）」
+//  という逆の問題が出ていた。
+//  → hold-preferred に変更し、他キーが押された瞬間にレイヤーが確定
+//    するようにする。tapping-term も短くしてホールド判定を高速化。
+//  ※暴発が再発する場合は flavor を "balanced" に戻すと中間挙動になる。
 
 &lt {
-    flavor = "tap-preferred";
-    tapping-term-ms = <300>;         // 250 → 300
-    quick-tap-ms = <300>;            // 200 → 300
-    require-prior-idle-ms = <300>;   // 250 → 300
+    flavor = "hold-preferred";       // tap-preferred → hold-preferred（レイヤー優先）
+    tapping-term-ms = <200>;         // 300 → 200（ホールド判定を早める）
+    quick-tap-ms = <150>;            // 300 → 150（連打タップは許容）
+    require-prior-idle-ms = <0>;     // 300 → 0（直前に入力があってもホールド可）
 };
 
 / {
