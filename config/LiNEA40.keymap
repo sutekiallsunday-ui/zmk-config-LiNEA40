@@ -81,24 +81,43 @@
             key-positions = <6 7>;
         };
 
+        // ===== トラックボール用クリックコンボ =====
+        // 左クリック/右クリックは MOUSE レイヤー上で J / L 単体に割り当て済
+        //
+        // 中クリック・戻る・進むは「layers = <MOUSE>」で MOUSE レイヤー専用化:
+        // - デフォルトレイヤー (通常タイピング中) では絶対に発火しない
+        //   → "him,", "them,", ", " 等の連続入力で誤爆する心配ゼロ
+        // - 左親指の &mo 1 を押している間 (=MOUSEレイヤー) のみ発火可能
+        // require-prior-idle-ms = <0> でトラックボール移動中でも発火可能
+        // slow-release でドラッグ操作に対応
+
         CenterClick {
             bindings = <&mkp MB3>;
             key-positions = <17 16>;
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
+            slow-release;
         };
 
-        RightClick {
-            bindings = <&mkp MB2>;
-            key-positions = <18 17>;
-        };
-
+        // M + , (左側) = 戻る、 , + . (右側) = 進む
+        // ブラウザの戻る/進むボタンの慣例的な左右配置に合わせている
         PrevClick {
             bindings = <&mkp MB4>;
-            key-positions = <27 28>;
+            key-positions = <26 27>;
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
+            slow-release;
         };
 
         ClickNext {
             bindings = <&mkp MB5>;
-            key-positions = <26 27>;
+            key-positions = <27 28>;
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
+            slow-release;
         };
     };
 
@@ -126,20 +145,22 @@
 &kp Q          &kp W         &kp E               &kp R    &kp T                                      &kp Y        &kp U  &kp I                &kp O          &kp P
 &kp A          &kp S         &kp D               &kp F    &kp G                                      &kp H        &kp J  &kp K                &kp L          &lt 5 MINUS
 &kp Z          &kp X         &kp C               &kp V    &kp B                                      &kp N        &kp M  &kp COMMA            &kp DOT        &mt RIGHT_SHIFT BACKSPACE
-&mt LCTRL ESC  &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &kp INS  &lt 5 ENTER  &lt 2 TAB    &lt 2 BACKSPACE  &lt 4 SPACE         &lt 6 RIGHT_BRACKET  &kp BACKSLASH  &mt RIGHT_SHIFT SLASH
+&mt LCTRL ESC  &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &mo 1    &lt 5 ENTER  &lt 2 TAB    &lt 2 BACKSPACE  &lt 4 SPACE         &lt 6 RIGHT_BRACKET  &kp BACKSLASH  &mt RIGHT_SHIFT SLASH
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
         };
 
         //1
+        // MOUSE レイヤー: 左親指の &mo 1 を押している間だけ有効
+        // J 単体 = 左クリック (MB1), L 単体 = 右クリック (MB2)
 
         MOUSE {
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1  &trans  &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans  &trans     &trans
             >;
         };
 
