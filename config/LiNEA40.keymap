@@ -118,26 +118,60 @@
         };
 
         // DeleteKey (DEL = 前方向削除)
-        //   旧設定: J(16) + K(17) → ローマ字入力で J を含む単語のたびに
-        //   ZMK が K の到来を timeout-ms だけ待つため J の出力にラグが乗り、
-        //   さらに J 直後に K が混ざると DEL に化けて「J が反応しない」現象に。
-        //   解消のため、ローマ字／英字でほぼ同時押しが起きない
-        //   COMMA(27) + DOT(28) ペアへ移動。
-        //   このペアは通常タイピングでまず同時押しが起きないため
-        //   timeout-ms を 100ms に広げて発火しやすくしている。
-        //   ※他候補: M(26)+COMMA(27) や K(17)+L(18) なども安全。
-        //     キーペアだけ差し替えれば変更可能。
+        //   J(16)+K(17) は MOUSE レイヤーの中クリック(MB3)コンボと位置が重なる。
+        //   layers = <BASE MARK CURSOR FUNCTION SCROLL WIRELESS BROWSER_NAV>
+        //   で MOUSE レイヤーを除外し、MOUSE 時は CenterClick 側だけが発火する
+        //   ように切り分けている。
 
         DeleteKey {
             timeout-ms = <150>;
             bindings = <&kp DEL>;
             key-positions = <16 17>;
+            layers = <BASE MARK CURSOR FUNCTION SCROLL WIRELESS BROWSER_NAV>;
         };
 
         scroll_combo {
             timeout-ms = <100>;
             key-positions = <18 19>;
             bindings = <&mo SCROLL>;
+            slow-release;
+        };
+
+        // ===== トラックボール用クリックコンボ (MOUSE レイヤー専用) =====
+        //   layers = <MOUSE> でデフォルトレイヤーでは絶対に発火しない
+        //     → "him,", ",.", "jk" 等の通常タイピングで誤爆ゼロ
+        //   require-prior-idle-ms = <0> でトラックボール移動中でも発火可能
+        //   slow-release でキーを離すまでボタン押下を維持 → ドラッグ対応
+
+        CenterClick {
+            bindings = <&mkp MB3>;
+            key-positions = <16 17>;          // J + K
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
+            slow-release;
+        };
+
+        // M + , (左寄り) = 戻る (MB4)
+        //   ブラウザの戻るボタンの慣例的な左側配置に合わせている
+
+        PrevClick {
+            bindings = <&mkp MB4>;
+            key-positions = <26 27>;          // M + ,
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
+            slow-release;
+        };
+
+        // , + . (右寄り) = 進む (MB5)
+
+        ClickNext {
+            bindings = <&mkp MB5>;
+            key-positions = <27 28>;          // , + .
+            layers = <MOUSE>;
+            timeout-ms = <50>;
+            require-prior-idle-ms = <0>;
             slow-release;
         };
     };
@@ -255,9 +289,9 @@
         compatible = "zmk,keymap";
 
         // 0: ベースレイヤー
-        //   左手ホームロウ → hrml、右手ホームロウ → hrmr に置換
-        //   親指の lt / mt は同じ書き方のままだが、上のグローバル設定が効いて
-        //   tapping-term / prior-idle が伸びるため誤発火しにくくなる
+        //   左親指 4 (位置 33) を &kp DEL → &mo 1 に変更し、MOUSE レイヤーを
+        //   手動で呼び出せるようにした (左親指を押している間のみ有効)。
+        //   DEL は MARK レイヤーの位置 37 や DeleteKey コンボ (J+K) で代用可能。
 
         default_layer {
             display-name = "Base";
@@ -265,30 +299,33 @@
 &hrml LEFT_ALT Q      &kp W         &kp E                 &kp R    &kp T                                  &kp Y            &kp U  &kp I               &kp O    &pnav BROWSER_NAV P
 &hrml LEFT_SHIFT A    &kp S         &kp D                 &kp F    &kp G                                  &kp H            &kp J  &kp K               &kp L    &hrmr RIGHT_SHIFT MINUS
 &hrml LEFT_CONTROL Z  &kp X         &kp C                 &kp V    &kp B                                  &kp N            &kp M  &kp COMMA           &kp DOT  &hrmr RIGHT_CONTROL QMARK
-&hrml LCTRL ESC       &kp LEFT_WIN  &hrml LEFT_ALT GRAVE  &kp DEL  &lt 4 SPACE  &lt 2 TAB    &lt 3 ENTER  &lt 4 BACKSPACE         &lt 6 LEFT_BRACKET  &kp SQT  &hrmr RIGHT_SHIFT SLASH
+&hrml LCTRL ESC       &kp LEFT_WIN  &hrml LEFT_ALT GRAVE  &mo 1    &lt 4 SPACE  &lt 2 TAB    &lt 3 ENTER  &lt 4 BACKSPACE         &lt 6 LEFT_BRACKET  &kp SQT  &hrmr RIGHT_SHIFT SLASH
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
         };
 
         // 1: マウスクリック
-        //   ※このレイヤーはシールド側の auto-mouse-layer で
-        //     「トラックボールが動くと自動 ON」になる構成になっているため、
-        //     J / L にクリックを置くと高速タイピング中に手のひらが
-        //     トラックボールに触れた瞬間に「J=左クリック」「L=右クリック」
-        //     が送られてしまい、マウスポインタ位置へテキストカーソルが
-        //     ジャンプする事故が起きる。
-        //   対策: J(16) と L(18) のクリックを &trans に戻し、
-        //     クリックは右親指の [ (38) と ' (39) へ退避させる。
-        //     こちらなら通常タイピングで誤って同時に当たることはない。
+        //   左親指の &mo 1 を押している間だけ MOUSE レイヤーが有効
+        //   J 単体 = 左クリック (MB1), L 単体 = 右クリック (MB2)
+        //   J+K = 中クリック (MB3), M+, = 戻る (MB4), ,+. = 進む (MB5)
+        //
+        //   【auto-mouse-layer との関係】
+        //   シールド側で auto-mouse-layer (トラックボール動作で自動 ON) を
+        //   有効にしている場合、手のひらがトラックボールに触れた瞬間に
+        //   このレイヤーが ON → J/L が押されると誤クリックする可能性あり。
+        //   その挙動が問題になる場合は auto-mouse-layer を無効化 (シールドの
+        //   .conf で CONFIG_ZMK_POINTING_DEFAULT_MOUSE_LAYER 関連、または
+        //   shield overlay の auto-layer 設定) し、&mo 1 の手動切替だけで
+        //   運用する設計に統一することを推奨。
 
         MOUSE {
             display-name = "Mouse";
             bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans  &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans          &mkp MB1  &mkp MB2  &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans     &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &mkp MB1   &trans  &mkp MB2   &trans
+&trans  &trans  &trans  &trans  &trans                    &trans  &trans     &trans  &trans     &trans
+&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans             &trans  &trans     &trans
             >;
         };
 
